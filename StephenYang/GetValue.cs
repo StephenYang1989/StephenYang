@@ -106,6 +106,36 @@ namespace StephenYang
             return result;
         }
 
+        /// <summary>
+        /// 取得硬盘卷标号
+        /// </summary>
+        /// <returns></returns>
+        public static string GetDiskVolumeSerialNumber()
+        {
+            ManagementClass mc = new ManagementClass("Win32_NetworkAdapterConfiguration");
+            ManagementObject disk = new ManagementObject("win32_logicaldisk.deviceid=\"d:\"");
+            disk.Get();
+            return disk.GetPropertyValue("VolumeSerialNumber").ToString();
+        }
+
+
+        /// <summary>
+        /// 取得CPU序列号
+        /// </summary>
+        /// <returns></returns>
+        public static string getCpu()
+        {
+            string strCpu = null;
+            ManagementClass myCpu = new ManagementClass("win32_Processor");
+            ManagementObjectCollection myCpuConnection = myCpu.GetInstances();
+            foreach (ManagementObject myObject in myCpuConnection)
+            {
+                strCpu = myObject.Properties["Processorid"].Value.ToString();
+                break;
+            }
+            return strCpu;
+        }
+
         #region 大小写转换
 
         #region Member
